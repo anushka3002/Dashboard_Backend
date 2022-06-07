@@ -45,13 +45,48 @@ router.get("/",async(req,res)=>{
     }
 })
 
-router.delete("/delete:id",async(req,res)=>{
+// router.get("/:id",async(req,res)=>{
+//     try{
+//         const it = await Admin.findById(req.param.id)
+//         console.log(it)
+//         return res.send(it)
+//     }
+//     catch(err){
+//         return res.status(504).send("Error:"+err)
+//     }
+// })
+
+
+router.delete("/:id",async(req,res)=>{
     try{
         const items = await Admin.findByIdAndDelete(req.params.id)
+        console.log(items)
         return res.send(items)
     }
     catch(err){
         console.log("error")
+        return res.status(504).send("Error:"+err)
+    }
+})
+
+router.post("/login",async(req,res)=>{
+    try{
+        console.log(req.body)
+        const item = await Admin.findOne({email:req.body.email})
+
+        if(!item){
+            return res.status(400).send({message:"Invalid username or password"})
+        }
+        const match = item.checkPassword(req.body.password)
+
+        if(!match){
+            return res.status(400).send({message:"Invalid username or password"})
+        }
+
+        const token = newToken(item)
+        console.log(token,item)
+        return res.status(200).send({token,item})
+    }   catch(err){
         return res.status(504).send("Error:"+err)
     }
 })
