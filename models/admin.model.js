@@ -14,3 +14,15 @@ const adminSchema= new mongoose.Schema(
     }
 )
 
+adminSchema.pre("save",function(next){
+    if(!this.isModified("password")) return next()
+    var hash = bcrypt.hashSync(this.password,10)
+    this.password=hash;
+    return next()
+})
+
+adminSchema.methods.checkPassword = function(password){
+    return bcrypt.compareSync(password,this.password)
+}
+
+module.exports = mongoose.model("admin",adminSchema)
