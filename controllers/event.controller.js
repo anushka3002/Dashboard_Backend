@@ -31,6 +31,8 @@ router.delete("/:id", async (req, res) => {
       return res.status(500).send(err.message);
     }
   });
+
+// router.patch
 // router.get("/name",async(req,res)=>{
 //     try{
 //         const query= req.query.filter;
