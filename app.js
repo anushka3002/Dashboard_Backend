@@ -1,6 +1,8 @@
 const express= require("express")
 const cors = require("cors")
 const connect = require("./configs/db")
+const dotenv = require("dotenv")
+dotenv.config()
 const app=express();
 app.use(express.json())
 const adminController = require("./controllers/admin.controller")
@@ -12,12 +14,12 @@ app.use(cors({origin:"*"}))
 app.use("/admin",adminController)
 app.use("/student",student_infoController)
 app.use("/event",eventController)
-const Port = process.env.port || 3332
-
-app.listen(Port,async function(){
+const port = process.env.PORT
+console.log(port)
+app.listen(3332,async function(){
     try{
         await connect()
-        console.log(`listening on port ${Port}`)
+        console.log(`listening on port 3332`)
     }
     catch(e){
         console.log(e.message)
