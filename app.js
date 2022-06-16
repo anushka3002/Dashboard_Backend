@@ -14,8 +14,8 @@ app.use(cors({origin:"*"}))
 app.use("/admin",adminController)
 app.use("/student",student_infoController)
 app.use("/event",eventController)
-const port = process.env.PORT
-console.log(port)
+// const port = process.env.PORT
+// console.log(port)
 app.listen(3332,async function(){
     try{
         await connect()
